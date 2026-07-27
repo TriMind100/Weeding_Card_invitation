@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Aarav &amp; Riya — 7 November 2026</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -2043,6 +2043,31 @@ footer {
   margin-top: 28px;
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
   line-height: 1.6;
+}
+.replay-btn {
+  margin-top: 32px;
+  background: transparent;
+  border: 1px solid rgba(214, 168, 93, 0.3);
+  border-radius: 20px;
+  padding: 8px 20px;
+  color: rgba(214, 168, 93, 0.85);
+  font-family: var(--sans);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+}
+.replay-btn:hover {
+  background: rgba(214, 168, 93, 0.1);
+  border-color: rgba(214, 168, 93, 0.7);
+  color: var(--gold-soft);
+  transform: translateY(-2px);
+}
   max-width: 80%;
   margin-left: auto;
   margin-right: auto;
@@ -2557,12 +2582,10 @@ body {
   opacity: 0;
   pointer-events: none;
   transform: translateY(100vh) scale(0.97);
-  filter: blur(4px);
   
   transition:
     opacity   0.65s cubic-bezier(0.16, 1, 0.3, 1),
-    transform 0.65s cubic-bezier(0.16, 1, 0.3, 1),
-    filter    0.65s cubic-bezier(0.16, 1, 0.3, 1);
+    transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
   will-change: transform, opacity;
   z-index: 1;
 
@@ -3796,33 +3819,47 @@ body {
   transform: rotateY(0deg) scale(1) !important;
 }
 
-/* Scroll Down Icon */
-.scroll-down-floating {
+/* Scroll Navigation & Music Icons */
+.scroll-nav-btn {
   position: fixed;
-  bottom: 24px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  background: rgba(10, 7, 18, 0.7);
-  border: 1px solid rgba(214, 168, 93, 0.5);
-  color: var(--gold-soft);
+  width: 40px;
+  height: 40px;
+  background: transparent;
+  border: 1px solid transparent;
+  color: rgba(214, 168, 93, 0.75);
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 9999;
   cursor: pointer;
-  animation: floatBounce 2.5s infinite ease-in-out;
-  backdrop-filter: blur(5px);
-  transition: all 0.3s ease;
+  transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+  z-index: 9999;
 }
-.scroll-down-floating:hover {
-  background: var(--gold);
-  color: var(--black);
-  border-color: var(--gold);
+.scroll-nav-btn:hover {
+  color: var(--gold-soft);
+  transform: scale(1.15);
+  filter: drop-shadow(0 0 10px rgba(214, 168, 93, 0.5));
 }
-@keyframes floatBounce {
+.scroll-nav-up {
+  top: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  animation: floatBounceUp 2.5s infinite ease-in-out;
+}
+.scroll-nav-down {
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  animation: floatBounceDown 2.5s infinite ease-in-out;
+}
+.scroll-nav-music {
+  top: 24px;
+  right: 24px;
+}
+@keyframes floatBounceUp {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50% { transform: translateX(-50%) translateY(-10px); }
+}
+@keyframes floatBounceDown {
   0%, 100% { transform: translateX(-50%) translateY(0); }
   50% { transform: translateX(-50%) translateY(10px); }
 }
@@ -3903,9 +3940,38 @@ body {
 .lightbox-close:hover { color: #FFFEEF; transform: scale(1.15) rotate(90deg); }
 .fam-portrait-frame { cursor: pointer; transition: transform 0.3s ease; }
 .fam-portrait-frame:hover { transform: scale(1.02); }
+
+/* Landscape Mobile Overlay */
+#landscape-warning {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: var(--black);
+  color: var(--gold);
+  z-index: 999999;
+  text-align: center;
+  padding: 24px;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+@media screen and (max-width: 900px) and (orientation: landscape) {
+  #landscape-warning { display: flex; }
+  #card-deck, #curtain-entrance, .scroll-nav-controls { display: none !important; }
+}
 </style>
 </head>
 <body>
+
+<div id="landscape-warning">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="width: 48px; height: 48px; margin-bottom: 16px;">
+    <rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect>
+    <line x1="12" y1="18" x2="12.01" y2="18"></line>
+    <path d="M19 8l-3 3-3-3"></path>
+  </svg>
+  <h2 style="font-family: var(--serif); font-size: 24px; margin-bottom: 12px;">Please rotate your device</h2>
+  <p style="font-family: var(--sans); font-size: 14px; opacity: 0.8; max-width: 400px; line-height: 1.5;">This elegant invitation is best experienced in portrait mode.</p>
+</div>
 
 <!-- ============ ROYAL THEATER CURTAIN ENTRANCE ============ -->
 <div id="curtain-entrance">
@@ -4459,7 +4525,7 @@ body {
         </div>
 
         <div class="fam-portrait-frame">
-          <img src="groom_family.png" alt="Groom's Family Portrait">
+          <img loading="lazy" src="groom_family.png" alt="Groom's Family Portrait">
           <svg class="fam-frame-decor" viewBox="0 0 100 100" preserveAspectRatio="none">
             <rect x="2" y="2" width="96" height="96" fill="none" stroke="rgba(214,168,93,0.3)" stroke-width="0.8"/>
             <path d="M 2,10 L 2,2 L 10,2" fill="none" stroke="var(--gold)" stroke-width="1"/>
@@ -4506,7 +4572,7 @@ body {
         </div>
 
         <div class="fam-portrait-frame">
-          <img src="bride_family.png" alt="Bride's Family Portrait">
+          <img loading="lazy" src="bride_family.png" alt="Bride's Family Portrait">
           <svg class="fam-frame-decor" viewBox="0 0 100 100" preserveAspectRatio="none">
             <rect x="2" y="2" width="96" height="96" fill="none" stroke="rgba(214,168,93,0.3)" stroke-width="0.8"/>
             <path d="M 2,10 L 2,2 L 10,2" fill="none" stroke="var(--gold)" stroke-width="1"/>
@@ -4579,7 +4645,7 @@ body {
         </div>
         <div class="ev-image-frame">
           <div class="ev-img-crop">
-            <img src="event_haldi.png" alt="Haldi">
+            <img loading="lazy" src="event_haldi.png" alt="Haldi">
           </div>
           <svg class="ev-frame-decor" viewBox="0 0 100 120" preserveAspectRatio="none">
             <path d="M 2,12 L 2,2 L 12,2" fill="none" stroke="var(--gold)" stroke-width="1.2"/>
@@ -4626,7 +4692,7 @@ body {
         </div>
         <div class="ev-image-frame">
           <div class="ev-img-crop">
-            <img src="event_mehendi.png" alt="Mehendi">
+            <img loading="lazy" src="event_mehendi.png" alt="Mehendi">
           </div>
           <svg class="ev-frame-decor" viewBox="0 0 100 120" preserveAspectRatio="none">
             <path d="M 2,12 L 2,2 L 12,2" fill="none" stroke="var(--gold)" stroke-width="1.2"/>
@@ -4672,7 +4738,7 @@ body {
         </div>
         <div class="ev-image-frame">
           <div class="ev-img-crop">
-            <img src="event_sangeet.png" alt="Sangeet">
+            <img loading="lazy" src="event_sangeet.png" alt="Sangeet">
           </div>
           <svg class="ev-frame-decor" viewBox="0 0 100 120" preserveAspectRatio="none">
             <path d="M 2,12 L 2,2 L 12,2" fill="none" stroke="var(--gold)" stroke-width="1.2"/>
@@ -4720,7 +4786,7 @@ body {
         </div>
         <div class="ev-image-frame">
           <div class="ev-img-crop">
-            <img src="event_wedding.png" alt="Wedding">
+            <img loading="lazy" src="event_wedding.png" alt="Wedding">
           </div>
           <svg class="ev-frame-decor" viewBox="0 0 100 120" preserveAspectRatio="none">
             <path d="M 2,12 L 2,2 L 12,2" fill="none" stroke="var(--gold)" stroke-width="1.2"/>
@@ -4767,7 +4833,7 @@ body {
         </div>
         <div class="ev-image-frame">
           <div class="ev-img-crop">
-            <img src="event_reception.png" alt="Reception">
+            <img loading="lazy" src="event_reception.png" alt="Reception">
           </div>
           <svg class="ev-frame-decor" viewBox="0 0 100 120" preserveAspectRatio="none">
             <path d="M 2,12 L 2,2 L 12,2" fill="none" stroke="var(--gold)" stroke-width="1.2"/>
@@ -4876,7 +4942,7 @@ body {
     <div class="venue-calendar-bar reveal">
       <div class="vc-left-group">
         <div class="venue-candle-frame">
-          <img src="venue_candles.png" alt="Candles">
+          <img loading="lazy" src="venue_candles.png" alt="Candles">
         </div>
         <div class="vc-text">
           <span class="vc-script">Come celebrate with us</span>
@@ -5120,7 +5186,19 @@ body {
     <!-- Subtitle -->
     <div style="color:var(--gold-soft); font-size:12px; margin-top:8px;">♥</div>
     <p class="ty-subtitle">With love and joy, we invite you to be a part of our forever</p>
+<<<<<<<< HEAD:aarav-riya-wedding.html
     <p class="ty-subtitle">@KOLKODE</p>
+========
+
+    <!-- Replay Invitation Button -->
+    <button class="replay-btn" onclick="window.location.reload()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="width: 12px; height: 12px;">
+        <polyline points="1 4 1 10 7 10"></polyline>
+        <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path>
+      </svg>
+      View Again
+    </button>
+>>>>>>>> d543fec (Optimize performance, fix mobile UX blind spots, and rename to index.html):index.html
   </div>
 </footer>
 </div>
@@ -5411,21 +5489,19 @@ function spawnConfetti(){
     entering.style.transition = 'none';
     entering.style.opacity = '0';
     entering.style.transform = forward ? 'translateY(100vh) scale(0.97)' : 'translateY(-100vh) scale(0.97)';
-    entering.style.filter = 'blur(4px)';
     entering.style.pointerEvents = 'none';
     entering.classList.remove('card-active', 'card-exit-left', 'card-exit-right', 'card-exit-up', 'card-exit-down');
 
     entering.getBoundingClientRect();
 
     requestAnimationFrame(() => {
-      entering.style.transition = 'opacity 0.65s cubic-bezier(0.16,1,0.3,1), transform 0.65s cubic-bezier(0.16,1,0.3,1), filter 0.65s cubic-bezier(0.16,1,0.3,1)';
+      entering.style.transition = 'opacity 0.65s cubic-bezier(0.16,1,0.3,1), transform 0.65s cubic-bezier(0.16,1,0.3,1)';
 
       leaving.classList.remove('card-active');
       leaving.classList.add(forward ? 'card-exit-up' : 'card-exit-down');
 
       entering.style.opacity = '1';
       entering.style.transform = 'translateY(0) scale(1)';
-      entering.style.filter = 'blur(0px)';
       entering.classList.add('card-active');
 
       setTimeout(() => { 
@@ -5538,20 +5614,23 @@ function spawnConfetti(){
   });
 
   // Wheel gestures: transition immediately except on active carousels
-  let wheelAcc = 0;
-  let wheelTimer = null;
+  let wheelTimeout = false;
   document.addEventListener('wheel', e => {
     const isInsideCarousel = e.target.closest('.events-grid-new, .fam-grid, .story-timeline-wrap');
     if (isInsideCarousel) return; // Allow natural horizontal wheel translation
     
     e.preventDefault();
-    wheelAcc += e.deltaY;
-    clearTimeout(wheelTimer);
-    wheelTimer = setTimeout(() => {
-      if      (wheelAcc >  25) goNext();
-      else if (wheelAcc < -25) goPrev();
-      wheelAcc = 0;
-    }, 60);
+    if (wheelTimeout) return;
+    
+    if (e.deltaY > 25) {
+      goNext();
+      wheelTimeout = true;
+      setTimeout(() => wheelTimeout = false, 500);
+    } else if (e.deltaY < -25) {
+      goPrev();
+      wheelTimeout = true;
+      setTimeout(() => wheelTimeout = false, 500);
+    }
   }, { passive: false });
 
   // Touch swipes: vertical swipe up = next, swipe down = prev
@@ -5566,9 +5645,9 @@ function spawnConfetti(){
     const dy = touchY0 - e.changedTouches[0].clientY;
     const dx = touchX0 - e.changedTouches[0].clientX;
 
-    // Only block page swipe when inside horizontal carousels
+    // Only block page swipe when inside horizontal carousels AND the swipe is horizontal
     const isInsideCarousel = e.target.closest('.events-grid-new, .story-timeline-wrap');
-    if (isInsideCarousel) return;
+    if (isInsideCarousel && Math.abs(dx) > Math.abs(dy)) return;
 
     // Vertical swipe: swipe up (dy > 0) = next, swipe down (dy < 0) = prev
     if (Math.abs(dy) > Math.abs(dx) && Math.abs(dy) > 45) {
@@ -6229,10 +6308,28 @@ function spawnConfetti(){
   }
 
 })();</script>
-<!-- Floating Scroll Down Icon -->
-<div id="scroll-down-icon" class="scroll-down-floating">
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 20px; height: 20px;">
+<!-- Floating Nav Buttons -->
+<div id="scroll-up-icon" class="scroll-nav-btn scroll-nav-up" style="opacity: 0; pointer-events: none;">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="width: 20px; height: 20px;">
+    <polyline points="18 15 12 9 6 15"></polyline>
+  </svg>
+</div>
+
+<div id="scroll-down-icon" class="scroll-nav-btn scroll-nav-down">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="width: 20px; height: 20px;">
     <polyline points="6 9 12 15 18 9"></polyline>
+  </svg>
+</div>
+
+<div id="music-toggle-btn" class="scroll-nav-btn scroll-nav-music" title="Toggle Music">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="width: 20px; height: 20px;" id="music-icon-on">
+    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+    <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+  </svg>
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="width: 20px; height: 20px; display: none;" id="music-icon-off">
+    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+    <line x1="23" y1="9" x2="17" y2="15"></line>
+    <line x1="17" y1="9" x2="23" y2="15"></line>
   </svg>
 </div>
 <script>
@@ -6278,37 +6375,84 @@ function spawnConfetti(){
       });
     })();
 
-    const scrollIcon = document.getElementById('scroll-down-icon');
-    if(scrollIcon) {
-      scrollIcon.addEventListener('click', () => {
+    const scrollDownIcon = document.getElementById('scroll-down-icon');
+    const scrollUpIcon = document.getElementById('scroll-up-icon');
+    
+    if(scrollDownIcon) {
+      scrollDownIcon.addEventListener('click', () => {
         document.dispatchEvent(new KeyboardEvent('keydown', { key: 'PageDown' }));
       });
-      
-      // Hide scroll icon when on the last section
-      const observer = new MutationObserver(() => {
-        const sections = document.querySelectorAll('#card-deck > section, #card-deck > footer');
-        if (sections.length > 0) {
-          const isLastActive = sections[sections.length - 1].classList.contains('card-active');
-          if (isLastActive) {
-            scrollIcon.style.opacity = '0';
-            scrollIcon.style.pointerEvents = 'none';
-          } else {
-            scrollIcon.style.opacity = '1';
-            scrollIcon.style.pointerEvents = 'auto';
-          }
-        }
-      });
-      
-      const cardDeck = document.getElementById('card-deck');
-      if (cardDeck) {
-        observer.observe(cardDeck, { attributes: true, subtree: true, attributeFilter: ['class'] });
-      }
     }
+    
+    if(scrollUpIcon) {
+      scrollUpIcon.addEventListener('click', () => {
+        document.dispatchEvent(new KeyboardEvent('keydown', { key: 'PageUp' }));
+      });
+    }
+    
+    // Hide scroll down icon on last section, hide scroll up on first section
+    const observer = new MutationObserver(() => {
+      const sections = document.querySelectorAll('#card-deck > section, #card-deck > footer');
+      if (sections.length > 0) {
+        const isFirstActive = sections[0].classList.contains('card-active');
+        const isLastActive = sections[sections.length - 1].classList.contains('card-active');
+        
+        if (scrollUpIcon) {
+          scrollUpIcon.style.opacity = isFirstActive ? '0' : '1';
+          scrollUpIcon.style.pointerEvents = isFirstActive ? 'none' : 'auto';
+        }
+        
+        if (scrollDownIcon) {
+          scrollDownIcon.style.opacity = isLastActive ? '0' : '1';
+          scrollDownIcon.style.pointerEvents = isLastActive ? 'none' : 'auto';
+        }
+      }
+    });
+    
+    const cardDeck = document.getElementById('card-deck');
+    if (cardDeck) {
+      observer.observe(cardDeck, { attributes: true, subtree: true, attributeFilter: ['class'] });
+    }
+    // Music Toggle & Visibility Logic
+    document.addEventListener("DOMContentLoaded", () => {
+      const musicBtn = document.getElementById('music-toggle-btn');
+      const bgMusic = document.getElementById('bg-music');
+      const iconOn = document.getElementById('music-icon-on');
+      const iconOff = document.getElementById('music-icon-off');
+      let isMusicManuallyPaused = false;
+
+      if (musicBtn && bgMusic) {
+        musicBtn.addEventListener('click', () => {
+          if (bgMusic.paused) {
+            bgMusic.play().catch(e => console.log(e));
+            isMusicManuallyPaused = false;
+            iconOn.style.display = 'block';
+            iconOff.style.display = 'none';
+          } else {
+            bgMusic.pause();
+            isMusicManuallyPaused = true;
+            iconOn.style.display = 'none';
+            iconOff.style.display = 'block';
+          }
+        });
+
+        document.addEventListener("visibilitychange", () => {
+          if (document.hidden) {
+            bgMusic.pause();
+          } else {
+            const curtainOverlay = document.getElementById('curtain-overlay');
+            if (!isMusicManuallyPaused && curtainOverlay && curtainOverlay.classList.contains('opened')) {
+              bgMusic.play().catch(e => console.log('Audio playback prevented', e));
+            }
+          }
+        });
+      }
+    });
   })();
 </script>
 
 <!-- Background Music -->
-<audio id="bg-music" src="AR RehmanThe Dichotomy of Fame.wmv.mp3" loop preload="auto"></audio>
+<audio id="bg-music" src="AR RehmanThe Dichotomy of Fame.wmv.mp3" loop preload="metadata"></audio>
 
 </body>
 </html>
